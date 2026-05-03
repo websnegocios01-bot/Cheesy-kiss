@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cerveseria Àgora – Abrera, Barcelona</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --warm: #fdf6ec;
+    --gold: #c8922a;
+    --gold-light: #e8b84b;
+    --dark: #1a1208;
+    --brown: #3d2b10;
+    --text: #2c1f0e;
+    --muted: #7a6248;
+    --accent: #c8922a;
+    --red: #8b1a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 48px;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(200,146,42,0.2);
+    transition: all 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--brown);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav ul a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: #fff !important;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--brown) !important; color: #fff !important; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 64px 80px;
+    position: relative;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    right: -60px; top: 0; bottom: 0;
+    width: 120px;
+    background: var(--dark);
+    clip-path: polygon(0 0, 50% 0, 100% 50%, 50% 100%, 0 100%);
+    z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,146,42,0.15);
+    border: 1px solid rgba(200,146,42,0.3);
+    color: var(--gold-light);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 40px;
+    margin-bottom: 32px;
+    width: fit-content;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-badge::before {
+    content: '★';
+    font-size: 10px;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 6vw, 86px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 0.95;
+    margin-bottom: 12px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2vw, 26px);
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-desc {
+    color: rgba(255,255,255,0.65);
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 380px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(200,146,42,0.4);
+  }
+
+  .btn-secondary {
+    border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.8);
+    padding: 14px 32px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    transition: all 0.25s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .hero-right {
+    background: var(--warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 64px 80px 100px;
+    position: relative;
+  }
+
+  .hero-visual {
+    width: 100%;
+    max-width: 460px;
+    aspect-ratio: 4/5;
+    background: var(--brown);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 24px 24px 0 rgba(200,146,42,0.15), 0 32px 64px rgba(61,43,16,0.25);
+  }
+
+  .hero-visual-inner {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(200,146,42,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(139,26,26,0.2) 0%, transparent 60%),
+      linear-gradient(160deg, #3d2b10 0%, #1a1208 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    text-align: center;
+  }
+
+  .hero-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .hero-visual h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .hero-visual p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .rating-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,146,42,0.2);
+    border: 1px solid rgba(200,146,42,0.4);
+    padding: 10px 20px;
+    border-radius: 40px;
+  }
+
+  .stars { color: var(--gold-light); font-size: 16px; letter-spacing: 2px; }
+
+  .rating-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+
+  .rating-count {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .hero-tags {
+    position: absolute;
+    bottom: 32px;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 0 32px;
+  }
+
+  .tag {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.65);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+
+  /* ── INFO BAR ── */
+  .info-bar {
+    background: var(--brown);
+    padding: 20px 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .info-item .icon {
+    font-size: 18px;
+  }
+
+  .info-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 100px 48px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 900;
+    color: var(--brown);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 560px;
+  }
+
+  /* ── CARTA / MENU ── */
+  #carta {
+    background: var(--warm);
+  }
+
+  .carta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+    flex-wrap: wrap;
+    gap: 24px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .carta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .carta-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid rgba(200,146,42,0.1);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carta-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .carta-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(61,43,16,0.12);
+    border-color: rgba(200,146,42,0.25);
+  }
+
+  .carta-card:hover::before { transform: scaleX(1); }
+
+  .carta-emoji {
+    font-size: 36px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .carta-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 8px;
+  }
+
+  .carta-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .carta-popular {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: var(--gold);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── ESPECIALIDADES ── */
+  #especialidades {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #especialidades::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,146,42,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .esp-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  #especialidades .section-title { color: #fff; }
+  #especialidades .section-desc { color: rgba(255,255,255,0.5); }
+
+  .esp-list {
+    list-style: none;
+    margin-top: 40px;
+  }
+
+  .esp-list li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  .esp-list li:hover { color: var(--gold-light); }
+
+  .esp-list li::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 8px;
+    flex-shrink: 0;
+  }
+
+  .esp-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .esp-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .esp-card:hover {
+    background: rgba(200,146,42,0.08);
+    border-color: rgba(200,146,42,0.25);
+    transform: translateY(-4px);
+  }
+
+  .esp-card .esp-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+
+  .esp-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .esp-card p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+  .esp-card.featured {
+    grid-column: span 2;
+    background: rgba(200,146,42,0.1);
+    border-color: rgba(200,146,42,0.3);
+  }
+
+  /* ── RESEÑAS ── */
+  #resenas {
+    background: var(--cream);
+  }
+
+  .resenas-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .resenas-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .resenas-header .section-desc { margin: 0 auto; }
+
+  .resenas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .resena-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid rgba(200,146,42,0.1);
+    transition: all 0.3s;
+  }
+
+  .resena-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(61,43,16,0.1);
+  }
+
+  .resena-stars { color: var(--gold); font-size: 14px; margin-bottom: 12px; }
+
+  .resena-text {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .resena-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .resena-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--brown));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .resena-name { font-weight: 600; font-size: 14px; color: var(--brown); }
+  .resena-meta { font-size: 12px; color: var(--muted); }
+
+  /* ── TERRAZA ── */
+  #terraza {
+    background: linear-gradient(160deg, var(--brown) 0%, var(--dark) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #terraza::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(200,146,42,0.15) 0%, transparent 65%);
+  }
+
+  .terraza-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  #terraza .section-label { color: var(--gold-light); }
+  #terraza .section-title { color: #fff; margin-bottom: 20px; }
+  #terraza .section-desc { color: rgba(255,255,255,0.6); margin: 0 auto 48px; }
+
+  .terraza-features {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+
+  .terraza-feat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .terraza-feat span:first-child { font-size: 28px; }
+
+  /* ── HORARIOS / CONTACTO ── */
+  #contacto {
+    background: var(--warm);
+  }
+
+  .contacto-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .horarios-table {
+    margin-top: 32px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(200,146,42,0.15);
+  }
+
+  .horario-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    border-bottom: 1px solid rgba(200,146,42,0.08);
+    font-size: 14px;
+    background: #fff;
+    transition: background 0.2s;
+  }
+
+  .horario-row:last-child { border-bottom: none; }
+  .horario-row:hover { background: rgba(200,146,42,0.04); }
+
+  .horario-day { font-weight: 600; color: var(--brown); }
+  .horario-hours { color: var(--muted); }
+  .horario-open {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2d8a4e;
+    background: rgba(45,138,78,0.1);
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-cards {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 24px;
+    border: 1px solid rgba(200,146,42,0.1);
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .contact-card:hover {
+    border-color: var(--gold);
+    transform: translateX(4px);
+    box-shadow: 0 8px 24px rgba(200,146,42,0.1);
+  }
+
+  .contact-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .contact-info { flex: 1; }
+  .contact-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 4px; }
+  .contact-value { font-size: 16px; font-weight: 600; color: var(--brown); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 60px 48px 32px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 48px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .footer-brand .nav-logo { font-size: 28px; }
+
+  .footer-brand p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 12px;
+    max-width: 280px;
+    line-height: 1.7;
+  }
+
+  .footer-links h4 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .footer-links ul { list-style: none; }
+
+  .footer-links li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .footer-links li:hover { color: var(--gold-light); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+  }
+
+  .accessibility-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .a11y-badge {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: all 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+
+    #hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 100px 28px 48px; }
+    .hero-left::after { display: none; }
+    .hero-right { display: none; }
+
+    section { padding: 72px 24px; }
+
+    .esp-inner { grid-template-columns: 1fr; gap: 48px; }
+    .contacto-inner { grid-template-columns: 1fr; gap: 48px; }
+
+    .info-bar { padding: 16px 24px; gap: 20px; }
+    .info-divider { display: none; }
+
+    .footer-top { flex-direction: column; }
+
+    .carta-header { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Àgora<span>.</span></div>
+  <ul>
+    <li><a href="#carta">Carta</a></li>
+    <li><a href="#especialidades">Especialitats</a></li>
+    <li><a href="#resenas">Opinions</a></li>
+    <li><a href="#terraza">Terrassa</a></li>
+    <li><a href="#contacto" class="nav-cta">Contacte</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-badge">Abrera · Des de sempre</div>
+    <h1 class="hero-title">Cerveseria<br><em>Àgora</em></h1>
+    <p class="hero-sub">Abrera, Barcelona</p>
+    <p class="hero-desc">El teu bar de confiança a la Plaça de Rafael Casanova. Tapes, entrepans i plats combinats amb productes frescos, racions generoses i preus ajustats. Benvingut a casa.</p>
+    <div class="hero-btns">
+      <a href="#carta" class="btn-primary">🍺 Veure la carta</a>
+      <a href="tel:652801598" class="btn-secondary">📞 Trucar ara</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-visual-inner">
+        <span class="hero-icon">🍺</span>
+        <h3>Cerveseria Àgora</h3>
+        <p>Cuina casolana, ambient acollidor i els millors preus d'Abrera</p>
+        <div class="rating-badge">
+          <span class="stars">★★★★</span>
+          <span class="rating-text">3,9</span>
+          <span class="rating-count">· 623 opinions</span>
+        </div>
+        <div class="hero-tags" style="position:relative;bottom:auto;left:auto;right:auto;margin-top:24px">
+          <span class="tag">Tapes</span>
+          <span class="tag">Entrepans</span>
+          <span class="tag">Terrassa</span>
+          <span class="tag">10–20€</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO BAR -->
+<div class="info-bar">
+  <div class="info-item"><span class="icon">📍</span> Plaça de Rafael Casanova 14, Abrera</div>
+  <div class="info-divider"></div>
+  <div class="info-item"><span class="icon">📞</span> 652 80 15 98</div>
+  <div class="info-divider"></div>
+  <div class="info-item"><span class="icon">🕗</span> Obert des de les 8:00</div>
+  <div class="info-divider"></div>
+  <div class="info-item"><span class="icon">💰</span> 10–20€ per persona</div>
+  <div class="info-divider"></div>
+  <div class="info-item"><span class="icon">♿</span> Accessible</div>
+</div>
+
+<!-- CARTA -->
+<section id="carta">
+  <div class="carta-header reveal">
+    <div>
+      <p class="section-label">La nostra carta</p>
+      <h2 class="section-title">Menjar de <em>veritat</em></h2>
+    </div>
+    <p class="section-desc">Racions generoses, ingredients frescos i preus que no et sorprendran malament.</p>
+  </div>
+  <div class="carta-grid">
+    <div class="carta-card reveal">
+      <span class="carta-popular">Popular</span>
+      <span class="carta-emoji">🥪</span>
+      <h3>Entrepans</h3>
+      <p>El millor bikini sense formatge d'Abrera. Frankfurt, vegetal de pollastre i moltes més opcions. Pa cruixent, farcit generós.</p>
+    </div>
+    <div class="carta-card reveal">
+      <span class="carta-popular">Popular</span>
+      <span class="carta-emoji">🍟</span>
+      <h3>Tapes</h3>
+      <p>Patates braves de la casa, pinchos morunos, berberechos, saquets de mariscos i molt més. Per picar i compartir.</p>
+    </div>
+    <div class="carta-card reveal">
+      <span class="carta-emoji">🍽️</span>
+      <h3>Plats Combinats</h3>
+      <p>Ous estrellats, pollastre arrebossat, hamburguesa... Plats complerts per menys de 10€. La millor relació qualitat-preu.</p>
+    </div>
+    <div class="carta-card reveal">
+      <span class="carta-emoji">🦑</span>
+      <h3>Planxa</h3>
+      <p>Sípia a la planxa, bombes i tot allò que surt millor quan es cuina a foc viu amb producte fresc.</p>
+    </div>
+    <div class="carta-card reveal">
+      <span class="carta-emoji">🥟</span>
+      <h3>Especialitats Orientals</h3>
+      <p>Fideus, gyozas, arròs frit i empanadilles. Una sorpresa deliciosa que els clients repeteixen sempre.</p>
+    </div>
+    <div class="carta-card reveal">
+      <span class="carta-emoji">☕</span>
+      <h3>Esmorzars</h3>
+      <p>Oberts des de les 8:00. Cafè amb llet, mini croissant, torrades i tot el que necessites per començar el dia bé.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ESPECIALITATS -->
+<section id="especialidades">
+  <div class="esp-inner">
+    <div class="reveal">
+      <p class="section-label">Els nostres imprescindibles</p>
+      <h2 class="section-title">El que no et pots <em>perdre</em></h2>
+      <p class="section-desc">Alguns plats s'han convertit en llegenda a Abrera. Aquí tens els favorits dels nostres clients.</p>
+      <ul class="esp-list">
+        <li>Patates Braves de la Casa</li>
+        <li>Bikini Vegetal de Pollastre</li>
+        <li>Ous Estrellats amb Botifarra</li>
+        <li>Pinchos Morunos</li>
+        <li>Gyozas i Fideus Orientals</li>
+        <li>Berberechos al Natural</li>
+        <li>Bombes d'Abrera</li>
+        <li>Sépia a la Planxa</li>
+      </ul>
+    </div>
+    <div class="esp-cards reveal">
+      <div class="esp-card featured">
+        <span class="esp-icon">🍺</span>
+        <h4>Cervesa Freda</h4>
+        <p>Mahou de pressió i cubs de cervesa. La millor companyia per a les teves tapes.</p>
+      </div>
+      <div class="esp-card">
+        <span class="esp-icon">🥗</span>
+        <h4>Fresca & Abundant</h4>
+        <p>Racions generoses en cada plat</p>
+      </div>
+      <div class="esp-card">
+        <span class="esp-icon">💸</span>
+        <h4>Preus Ajustats</h4>
+        <p>Menjar bé sense trencar la guardiola</p>
+      </div>
+      <div class="esp-card">
+        <span class="esp-icon">🚗</span>
+        <h4>Aparcat Gratis</h4>
+        <p>Aparcament gratuït al carrer</p>
+      </div>
+      <div class="esp-card">
+        <span class="esp-icon">📱</span>
+        <h4>Pagament Fàcil</h4>
+        <p>Targeta i pagament mòbil NFC</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESENAS -->
+<section id="resenas">
+  <div class="resenas-inner">
+    <div class="resenas-header reveal">
+      <p class="section-label">El que diuen de nosaltres</p>
+      <h2 class="section-title">Opinions <em>reals</em></h2>
+      <p class="section-desc">623 opinions a Google Maps amb una valoració de 3,9 sobre 5. Lleig seria no llegir-les.</p>
+    </div>
+    <div class="resenas-grid">
+      <div class="resena-card reveal">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-text">"Bocadillos buenísimos y las tapas también. Muy buen precio todo. Buen servicio."</p>
+        <div class="resena-author">
+          <div class="resena-avatar">M</div>
+          <div>
+            <div class="resena-name">MERY GP</div>
+            <div class="resena-meta">Local Guide · Google Maps</div>
+          </div>
+        </div>
+      </div>
+      <div class="resena-card reveal">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-text">"El mejor bikini sin queso de Abrera. La atención de la chica joven es muy agradable."</p>
+        <div class="resena-author">
+          <div class="resena-avatar">M</div>
+          <div>
+            <div class="resena-name">Miguel Bonet</div>
+            <div class="resena-meta">Local Guide · Google Maps</div>
+          </div>
+        </div>
+      </div>
+      <div class="resena-card reveal">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-text">"Jan i Nieves, molt atentes. Ràpids i els entrepans i tapes estan molt bé. Varietat de cerveses. Perfecte per anar amb amics."</p>
+        <div class="resena-author">
+          <div class="resena-avatar">N</div>
+          <div>
+            <div class="resena-name">Neus V.P.</div>
+            <div class="resena-meta">Local Guide · Google Maps</div>
+          </div>
+        </div>
+      </div>
+      <div class="resena-card reveal">
+        <div class="resena-stars">★★★★☆</div>
+        <p class="resena-text">"Vamos con frecuencia y se está a gusto. Buenas tapas y comidas y precios asequibles."</p>
+        <div class="resena-author">
+          <div class="resena-avatar">J</div>
+          <div>
+            <div class="resena-name">José Gama</div>
+            <div class="resena-meta">Local Guide · Google Maps</div>
+          </div>
+        </div>
+      </div>
+      <div class="resena-card reveal">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-text">"Siempre gusta sentarte en su terraza y tomar unos aperitivos y unas cervecitas bien frías!"</p>
+        <div class="resena-author">
+          <div class="resena-avatar">A</div>
+          <div>
+            <div class="resena-name">Agustín Pérez</div>
+            <div class="resena-meta">Local Guide · Google Maps</div>
+          </div>
+        </div>
+      </div>
+      <div class="resena-card reveal">
+        <div class="resena-stars">★★★★☆</div>
+        <p class="resena-text">"Muy buen trato, buena y abundante comida en sus platos combinados a precios muy ajustados. Recomendable."</p>
+        <div class="resena-author">
+          <div class="resena-avatar">M</div>
+          <div>
+            <div class="resena-name">Manuel Arias</div>
+            <div class="resena-meta">Local Guide · Google Maps</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TERRAZA -->
+<section id="terraza">
+  <div class="terraza-inner">
+    <p class="section-label reveal">L'exterior</p>
+    <h2 class="section-title reveal">La nostra <em>terrassa</em></h2>
+    <p class="section-desc reveal">Ampla, acollidora i amb tots els serveis. Ideal per prendre el sol amb una cervesa freda a la mà a la Plaça de Rafael Casanova.</p>
+    <div class="terraza-features reveal">
+      <div class="terraza-feat">
+        <span>☀️</span>
+        <span>Terrassa àmplia</span>
+      </div>
+      <div class="terraza-feat">
+        <span>🚶</span>
+        <span>Cèntrica</span>
+      </div>
+      <div class="terraza-feat">
+        <span>♿</span>
+        <span>Accessible</span>
+      </div>
+      <div class="terraza-feat">
+        <span>🍺</span>
+        <span>Servei a taula</span>
+      </div>
+      <div class="terraza-feat">
+        <span>🕗</span>
+        <span>Horaris respectats</span>
+      </div>
+    </div>
+    <a href="tel:652801598" class="btn-primary reveal">📞 Reserva la teva taula · 652 80 15 98</a>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contacto-inner">
+    <div class="reveal">
+      <p class="section-label">Vine a veure'ns</p>
+      <h2 class="section-title">Horaris i <em>contacte</em></h2>
+      <p class="section-desc">Estem a la Plaça de Rafael Casanova, al cor d'Abrera. T'esperem!</p>
+      <div class="horarios-table">
+        <div class="horario-row">
+          <span class="horario-day">Dilluns</span>
+          <span class="horario-hours">Des de les 8:00</span>
+          <span class="horario-open">Obert</span>
+        </div>
+        <div class="horario-row">
+          <span class="horario-day">Dimarts</span>
+          <span class="horario-hours">Des de les 8:00</span>
+          <span class="horario-open">Obert</span>
+        </div>
+        <div class="horario-row">
+          <span class="horario-day">Dimecres</span>
+          <span class="horario-hours">Des de les 8:00</span>
+          <span class="horario-open">Obert</span>
+        </div>
+        <div class="horario-row">
+          <span class="horario-day">Dijous</span>
+          <span class="horario-hours">Des de les 8:00</span>
+          <span class="horario-open">Obert</span>
+        </div>
+        <div class="horario-row">
+          <span class="horario-day">Divendres</span>
+          <span class="horario-hours">Des de les 8:00</span>
+          <span class="horario-open">Obert</span>
+        </div>
+        <div class="horario-row">
+          <span class="horario-day">Dissabte</span>
+          <span class="horario-hours">Des de les 8:00</span>
+          <span class="horario-open">Obert</span>
+        </div>
+        <div class="horario-row">
+          <span class="horario-day">Diumenge</span>
+          <span class="horario-hours">Hora d'obertura no confirmada</span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <p class="section-label">Com trobar-nos</p>
+      <h2 class="section-title" style="font-size:36px">Contacte <em>directe</em></h2>
+      <div class="contact-cards">
+        <a href="tel:652801598" class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div class="contact-info">
+            <div class="contact-label">Telèfon</div>
+            <div class="contact-value">652 80 15 98</div>
+          </div>
+        </a>
+        <a href="https://maps.google.com/?q=Cerveseria+Agora+Abrera" target="_blank" class="contact-card">
+          <div class="contact-icon">📍</div>
+          <div class="contact-info">
+            <div class="contact-label">Adreça</div>
+            <div class="contact-value">Pl. Rafael Casanova 14, 08630 Abrera</div>
+          </div>
+        </a>
+        <div class="contact-card">
+          <div class="contact-icon">🚗</div>
+          <div class="contact-info">
+            <div class="contact-label">Aparcament</div>
+            <div class="contact-value">Gratuït al carrer</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">💳</div>
+          <div class="contact-info">
+            <div class="contact-label">Pagament</div>
+            <div class="contact-value">Targeta, efectiu i NFC</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">🥡</div>
+          <div class="contact-info">
+            <div class="contact-label">Serveis</div>
+            <div class="contact-value">Local · Per emportar · A domicili</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo">Àgora<span>.</span></div>
+        <p>El teu bar de confiança a Abrera des de sempre. Cuina casolana, ambient acollidor i preus honestos.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navega</h4>
+        <ul>
+          <li onclick="document.getElementById('carta').scrollIntoView({behavior:'smooth'})">La Carta</li>
+          <li onclick="document.getElementById('especialidades').scrollIntoView({behavior:'smooth'})">Especialitats</li>
+          <li onclick="document.getElementById('resenas').scrollIntoView({behavior:'smooth'})">Opinions</li>
+          <li onclick="document.getElementById('terraza').scrollIntoView({behavior:'smooth'})">Terrassa</li>
+          <li onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Contacte</li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contacte</h4>
+        <ul>
+          <li>📞 652 80 15 98</li>
+          <li>📍 Pl. Rafael Casanova 14</li>
+          <li>🏘️ 08630 Abrera, Barcelona</li>
+          <li>🕗 Obert des de les 8:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Cerveseria Àgora · Abrera, Barcelona</span>
+      <div class="accessibility-badges">
+        <span class="a11y-badge">♿ Accessible</span>
+        <span class="a11y-badge">🚗 Aparcament gratuït</span>
+        <span class="a11y-badge">📱 Pagament NFC</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.boxShadow = '0 4px 24px rgba(61,43,16,0.12)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
